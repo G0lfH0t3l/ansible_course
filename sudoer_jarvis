@@ -1,0 +1,2 @@
+#Managed by Ansible
+jarvis ALL=(ALL) NOPASSWS: ALL

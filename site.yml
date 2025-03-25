@@ -17,6 +17,27 @@
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
+  - name: create user jarvis
+    tags: always
+    ansible.builtin.user:
+      name: jarvis
+      groups: root
+
+  - name: add sudoers file for jarvis
+    tags: always
+    ansible.builtin.copy:
+      src: sudoer_jarvis
+      dest: /etc/sudoers.d/jarvis
+      owner: root
+      group: root
+      mode: 0440
+
+  - name: add ssh key for jarvis
+    tags: always
+    ansible.builtin.authorized_key:
+      user: jarvis
+      key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDajHgZ/RJzlPkWamTUrlI92YKo+YYxUCdUT5kc2E2KfAHnL/5H1gp1GF8Nv2VWz3u6SNwmfco7RXeUnU34b3FmBRYV6/p0PDkTlizg/baogV9WRlUfgFY9eN2F1Je7bfEedIBVJigwnZGwf7AjKTBN0lirT834xFZYoUTxRt+wl6JfFQ5Vvil19rHDzyV+xsWTFkkGesYbcv5ODXhrWMVTKxga2xfG8Y+FyJfO5MkC6D6a4GYbd5PtD9dWDJPqJenFUxop6YQCelMMUqUzEf2VbIW6neoco0Lp8H53Wc3blfmN38LcbhZ11r7nFyutb4vasaolpDXObxwNfPTd0qfL+xqaXRsBquXSRrUC/jgzh0ADsM/v4ZRKFkYubNc61uez9Gt5CWUZ72bOAqUYO7qvMNv/fICUZoesK382iQyPMLny5nc061u6FKj1YQNvaj67X9crMq2fb7fj8ZmNp/p4UA+X/Chm6wgIroagZEiSLUo+M+WVFXDQIEeS50Sn1Zc= ansible@ubuntu-ws"
+
 - hosts: web_servers
   become: true
   tasks:
